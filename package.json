@@ -1,0 +1,24 @@
+{
+  "name": "data-generator-ken",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sole-hr/data-generator-ken.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sole-hr/data-generator-ken/issues"
+  },
+  "homepage": "https://github.com/sole-hr/data-generator-ken#readme",
+  "dependencies": {
+    "faker": "^4.1.0",
+    "shortid": "^2.2.14"
+  }
+}
