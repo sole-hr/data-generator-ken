@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "seed": "mongoimport -d sdc -c carousel --type csv --file ./10mrecords/records0.csv --headerline"
+    "generate": "node csv-generator.js",
+    "seed": "node mongoImporter.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
     "shortid": "^2.2.14"
   },
   "devDependencies": {
-    "gulp": "^4.0.2"
+    "gulp": "^4.0.2",
+    "gulp-exec": "^3.0.2"
   }
 }

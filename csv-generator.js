@@ -4,8 +4,10 @@ const faker = require("faker");
 const skuGen = require("shortid");
 const fs = require("fs");
 
-const numRecordsToGenerate = 10000000; // 10M records
+const numRecordsToGenerate = 1000; // 10M records
 const numberOfSeparateFiles = 10;
+
+let currentSKU = 0;
 
 const generateRandomColorArray = upTo => {
   const numColors = Math.ceil(upTo * Math.random());
@@ -26,8 +28,19 @@ const generateRandomImages = upTo => {
   }
   return images;
 };
+
+const generateRandomSKUs = numRelated => {
+  const relatedShoeObj = {};
+  for (let i = 0; i < numRelated; i++) {
+    let relatedShoe = Math.floor(numRecordsToGenerate * Math.random());
+    relatedShoeObj[relatedShoe] = relatedShoe;
+  }
+  return Object.values(relatedShoeObj);
+};
+
 for (let fileNumber = 0; fileNumber < numberOfSeparateFiles; fileNumber++) {
-  const categoryString = "sku,productName,category,color,price,images\n";
+  const categoryString =
+    "sku,productName,category,color,price,images,relatedShoes\n";
   try {
     fs.writeFileSync(`./10mrecords/records${fileNumber}.csv`, categoryString);
     console.log("HEADERS ADDED");
@@ -53,12 +66,13 @@ for (let fileNumber = 0; fileNumber < numberOfSeparateFiles; fileNumber++) {
     }
 
     let shoe = {
-      sku: skuGen.generate() + "",
+      sku: currentSKU,
       productName: faker.commerce.productName(),
       category: faker.commerce.department(),
       color: generateRandomColorArray(20),
       price: (150 * Math.random()).toFixed(2),
-      images: generateRandomImages(12)
+      images: generateRandomImages(12),
+      relatedShoes: generateRandomSKUs(12)
     };
 
     let currentEntry = "";
@@ -73,6 +87,15 @@ for (let fileNumber = 0; fileNumber < numberOfSeparateFiles; fileNumber++) {
           }
         }
         currentEntry += '"]"';
+      } else if (key === "relatedShoes") {
+        currentEntry += '"';
+        for (let i = 0; i < shoe[key].length; i++) {
+          currentEntry += shoe[key][i];
+          if (i !== shoe[key].length - 1) {
+            currentEntry += ",";
+          }
+        }
+        currentEntry += '"';
       } else {
         currentEntry += shoe[key];
       }
@@ -86,5 +109,6 @@ for (let fileNumber = 0; fileNumber < numberOfSeparateFiles; fileNumber++) {
     } catch (err) {
       console.error(err);
     }
+    currentSKU++;
   }
 }
