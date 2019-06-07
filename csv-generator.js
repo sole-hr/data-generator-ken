@@ -1,8 +1,10 @@
+//mongoimport -d sdc -c carousel --type csv --file records0.csv --headerline
+
 const faker = require("faker");
 const skuGen = require("shortid");
 const fs = require("fs");
 
-const numRecordsToGenerate = 1000; // 10M records
+const numRecordsToGenerate = 10000000; // 10M records
 const numberOfSeparateFiles = 10;
 
 const generateRandomColorArray = upTo => {
@@ -27,7 +29,7 @@ const generateRandomImages = upTo => {
 for (let fileNumber = 0; fileNumber < numberOfSeparateFiles; fileNumber++) {
   const categoryString = "sku,productName,category,color,price,images\n";
   try {
-    fs.writeFileSync(`./records${fileNumber}.csv`, categoryString);
+    fs.writeFileSync(`./10mrecords/records${fileNumber}.csv`, categoryString);
     console.log("HEADERS ADDED");
   } catch (err) {
     console.log("THERE WAS AN ERROR WRITING HEADERS");
@@ -63,14 +65,14 @@ for (let fileNumber = 0; fileNumber < numberOfSeparateFiles; fileNumber++) {
 
     for (let key in shoe) {
       if (key === "color" || key === "images") {
-        currentEntry += '"';
+        currentEntry += '"["';
         for (let i = 0; i < shoe[key].length; i++) {
-          currentEntry += shoe[key][i];
+          currentEntry += '"' + shoe[key][i] + '"';
           if (i !== shoe[key].length - 1) {
-            currentEntry += ",";
+            currentEntry += '","';
           }
         }
-        currentEntry += '"';
+        currentEntry += '"]"';
       } else {
         currentEntry += shoe[key];
       }
@@ -80,7 +82,7 @@ for (let fileNumber = 0; fileNumber < numberOfSeparateFiles; fileNumber++) {
     currentEntry += "\n";
 
     try {
-      fs.appendFileSync(`./records${fileNumber}.csv`, currentEntry);
+      fs.appendFileSync(`./10mrecords/records${fileNumber}.csv`, currentEntry);
     } catch (err) {
       console.error(err);
     }

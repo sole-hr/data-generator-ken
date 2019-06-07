@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "mongoimport -d sdc -c carousel --type csv --file ./10mrecords/records0.csv --headerline"
   },
   "repository": {
     "type": "git",
@@ -18,8 +19,10 @@
   },
   "homepage": "https://github.com/sole-hr/data-generator-ken#readme",
   "dependencies": {
-    "csvtojson": "^2.0.8",
     "faker": "^4.1.0",
     "shortid": "^2.2.14"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2"
   }
 }
