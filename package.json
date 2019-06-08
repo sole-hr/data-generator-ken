@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generate": "node csv-generator.js",
-    "seed": "node mongoImporter.js"
+    "generate-csv": "node csv-generator.js",
+    "generate-json": "node json-generator.js",
+    "seed-json": "node mongoImporterJSON.js"
   },
   "repository": {
     "type": "git",

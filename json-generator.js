@@ -29,15 +29,6 @@ const generateRandomImages = upTo => {
   return images;
 };
 
-const generateRandomSKUs = numRelated => {
-  const relatedShoeObj = {};
-  for (let i = 0; i < numRelated; i++) {
-    let relatedShoe = Math.floor(numRecordsToGenerate * Math.random());
-    relatedShoeObj[relatedShoe] = relatedShoe;
-  }
-  return Object.values(relatedShoeObj);
-};
-
 const generateRelatedShoeObj = () => {
   let shoe = {
     sku: Math.ceil(numRecordsToGenerate * Math.random()),
