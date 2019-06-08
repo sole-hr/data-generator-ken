@@ -4,7 +4,7 @@ const faker = require("faker");
 const skuGen = require("shortid");
 const fs = require("fs");
 
-const numRecordsToGenerate = 1000; // 10M records
+const numRecordsToGenerate = 10000000; // 10M records
 const numberOfSeparateFiles = 10;
 
 let currentSKU = 0;
