@@ -1,11 +1,11 @@
 //mongoimport -d sdc -c carousel --type csv --file records0.csv --headerline
-
+require("dotenv").config();
 const faker = require("faker");
 const skuGen = require("shortid");
 const fs = require("fs");
 
-const numRecordsToGenerate = 1000; // 10M records
-const numberOfSeparateFiles = 10;
+const numRecordsToGenerate = process.env.NUMRECORDS; // 10M records
+const numberOfSeparateFiles = process.env.NUMFILES;
 
 let currentSKU = 0;
 
