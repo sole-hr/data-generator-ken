@@ -1,11 +1,10 @@
 //mongoimport -d sdc -c carousel --type csv --file records0.csv --headerline
-
+require("dotenv").config();
 const faker = require("faker");
-const skuGen = require("shortid");
 const fs = require("fs");
 
-const numRecordsToGenerate = 10000000; // 10M records
-const numberOfSeparateFiles = 10;
+const numRecordsToGenerate = process.env.NUM_RECORDS; // 10M records
+const numberOfSeparateFiles = process.env.NUM_FILES_SHOES;
 
 let currentSKU = 0;
 
@@ -39,10 +38,12 @@ const generateRandomSKUs = numRelated => {
 };
 
 for (let fileNumber = 0; fileNumber < numberOfSeparateFiles; fileNumber++) {
-  const categoryString =
-    "sku,productName,category,color,price,images,relatedShoes\n";
+  const categoryString = "sku,product_name,price,category,thumbnail\n";
   try {
-    fs.writeFileSync(`./10mrecords/records${fileNumber}.csv`, categoryString);
+    fs.writeFileSync(
+      `./csvdata/shoe_table/records${fileNumber}.csv`,
+      categoryString
+    );
     console.log("HEADERS ADDED");
   } catch (err) {
     console.log("THERE WAS AN ERROR WRITING HEADERS");
@@ -67,45 +68,26 @@ for (let fileNumber = 0; fileNumber < numberOfSeparateFiles; fileNumber++) {
 
     let shoe = {
       sku: currentSKU,
-      productName: faker.commerce.productName(),
-      category: faker.commerce.department(),
-      color: generateRandomColorArray(20),
+      product_name: faker.commerce.productName(),
       price: (150 * Math.random()).toFixed(2),
-      images: generateRandomImages(12),
-      relatedShoes: generateRandomSKUs(12)
+      category: faker.commerce.department(),
+      thumbnail: faker.image.imageUrl()
     };
 
     let currentEntry = "";
 
     for (let key in shoe) {
-      if (key === "color" || key === "images") {
-        currentEntry += '"["';
-        for (let i = 0; i < shoe[key].length; i++) {
-          currentEntry += '"' + shoe[key][i] + '"';
-          if (i !== shoe[key].length - 1) {
-            currentEntry += '","';
-          }
-        }
-        currentEntry += '"]"';
-      } else if (key === "relatedShoes") {
-        currentEntry += '"';
-        for (let i = 0; i < shoe[key].length; i++) {
-          currentEntry += shoe[key][i];
-          if (i !== shoe[key].length - 1) {
-            currentEntry += ",";
-          }
-        }
-        currentEntry += '"';
-      } else {
-        currentEntry += shoe[key];
-      }
+      currentEntry += shoe[key];
       currentEntry += ",";
     }
     currentEntry = currentEntry.substr(0, currentEntry.length - 1); // remove last comma and replace it with a new line char
     currentEntry += "\n";
 
     try {
-      fs.appendFileSync(`./10mrecords/records${fileNumber}.csv`, currentEntry);
+      fs.appendFileSync(
+        `./csvdata/shoe_table/records${fileNumber}.csv`,
+        currentEntry
+      );
     } catch (err) {
       console.error(err);
     }

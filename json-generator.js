@@ -31,7 +31,7 @@ const generateRandomImages = upTo => {
 
 const generateRelatedShoeObj = () => {
   let shoe = {
-    sku: Math.ceil(numRecordsToGenerate * Math.random()),
+    itemSku: Math.ceil(numRecordsToGenerate * Math.random()),
     productName: faker.commerce.productName(),
     category: faker.commerce.department(),
     price: (150 * Math.random()).toFixed(2),
@@ -65,7 +65,7 @@ for (let fileNumber = 0; fileNumber < numberOfSeparateFiles; fileNumber++) {
     }
 
     let currentRecord = {
-      sku: currentSKU,
+      currentSku: currentSKU,
       relatedShoes: relatedShoes
     };
 
