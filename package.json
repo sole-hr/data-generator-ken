@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate-csv": "node csv-generator.js",
     "generate-json": "node json-generator.js",
-    "seed-json": "node mongoImporterJSON.js"
+    "seed-json": "node mongoImporterJSON.js",
+    "clear-postgres": "node clearPostgresTables.js"
   },
   "repository": {
     "type": "git",
